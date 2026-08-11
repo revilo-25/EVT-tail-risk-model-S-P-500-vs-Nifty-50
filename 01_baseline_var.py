@@ -1,15 +1,4 @@
-"""
-BASELINE VaR / CVaR MODELS
-----------------------------
-Implements the three standard approaches EVT will be benchmarked against:
-1. Normal (parametric) VaR/CVaR
-2. Student-t (parametric) VaR/CVaR
-3. Historical Simulation (non-parametric, empirical quantile)
 
-These are the models a typical risk desk uses day-to-day. EVT's whole
-value proposition is that it outperforms these specifically in the tail
-(99%, 99.5%), which is what we'll demonstrate in the backtest step.
-"""
 import numpy as np
 import pandas as pd
 from scipy import stats
