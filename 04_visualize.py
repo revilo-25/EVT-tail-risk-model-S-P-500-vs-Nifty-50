@@ -1,11 +1,4 @@
-"""
-VISUALIZATIONS (v2 -- both indices)
---------------------------------------
-Row 1: S&P 500 diagnostics | Row 2: Nifty 50 diagnostics
-Columns: (1) mean excess plot, (2) loss distribution + GPD threshold,
-(3) 99% VaR comparison across methods.
-Plus a 2nd standalone chart: tail index (xi) comparison, S&P vs Nifty.
-"""
+
 import numpy as np
 import pandas as pd
 import matplotlib
