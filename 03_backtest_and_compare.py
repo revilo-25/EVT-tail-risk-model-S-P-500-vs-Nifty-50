@@ -1,26 +1,4 @@
-"""
-BACKTESTING: KUPIEC + CHRISTOFFERSEN TESTS
----------------------------------------------
-A VaR model is only as good as its backtest. This is the step most student
-projects skip -- and the step that actually signals "risk management"
-maturity to a GS/MS interviewer, because a model that LOOKS statistically
-elegant but fails backtesting is useless in production.
 
-1. Kupiec POF (Proportion of Failures) test:
-   Tests whether the OBSERVED breach rate matches the EXPECTED breach rate
-   (e.g., a 99% VaR should be breached ~1% of the time). Likelihood-ratio
-   test against a chi-squared(1) distribution.
-
-2. Christoffersen independence test:
-   Tests whether breaches are INDEPENDENT over time, or whether they cluster
-   (breach today makes a breach tomorrow more likely) -- clustering means
-   the model isn't capturing volatility dynamics properly, which matters a
-   lot for capital adequacy under Basel/FRTB.
-
-Both tests are run using a ROLLING WINDOW: VaR is estimated on a trailing
-window, then tested against the NEXT day's actual return, walked forward
-across the full sample. This avoids look-ahead bias.
-"""
 import numpy as np
 import pandas as pd
 from scipy import stats
@@ -38,7 +16,7 @@ evt = _load("02_evt_pot_model.py", "evt")
 
 
 def kupiec_pof_test(breaches, n_total, alpha):
-    """Likelihood ratio test: H0 = observed breach rate == (1-alpha)."""
+   
     n_breach = breaches.sum()
     p_hat = n_breach / n_total
     p_expected = 1 - alpha
@@ -53,8 +31,7 @@ def kupiec_pof_test(breaches, n_total, alpha):
 
 
 def christoffersen_independence_test(breaches):
-    """Likelihood ratio test for independence of breach sequence (Markov
-    chain of 0/1 breach indicators). H0 = breaches are independent."""
+    
     breaches = breaches.astype(int)
     n00 = ((breaches[:-1] == 0) & (breaches[1:] == 0)).sum()
     n01 = ((breaches[:-1] == 0) & (breaches[1:] == 1)).sum()
@@ -82,8 +59,7 @@ def christoffersen_independence_test(breaches):
 
 
 def rolling_backtest(returns, alpha=0.99, window=1000, method="evt"):
-    """Walk-forward: fit model on trailing `window` days, test next day's
-    actual return against the VaR estimate. Returns breach indicator series."""
+   
     n = len(returns)
     breaches = []
     for t in range(window, n):
