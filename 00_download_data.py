@@ -1,13 +1,4 @@
-"""
-00_download_data.py
----------------------
-Downloads S&P 500 and Nifty 50 historical data via yfinance.
-Run this LOCALLY on your machine (not in a sandboxed environment).
 
-If you hit YFRateLimitError, this script auto-retries with backoff.
-If it keeps failing, wait 5-10 minutes and rerun -- Yahoo rate-limits
-by IP, and it resets on its own.
-"""
 import time
 import yfinance as yf
 
